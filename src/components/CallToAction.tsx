@@ -27,7 +27,7 @@ export function CallToAction() {
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="tel:+74951234567"
+              href="tel:+79940100505"
               className="inline-flex items-center justify-center gap-2 border border-primary-foreground/30 px-8 py-4 text-sm tracking-wide hover:bg-primary-foreground/10 transition-colors duration-300"
             >
               Назначить звонок
