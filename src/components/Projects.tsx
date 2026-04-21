@@ -17,11 +17,17 @@ const projects = [
   },
   {
     id: 2,
-    title: "Павильон Стекло",
-    category: "Коммерческий объект",
-    location: "Санкт-Петербург, Россия",
+    title: "Брутальный интерьер",
+    category: "Жилой дом",
+    location: "Новоникольск, Россия",
     year: "2023",
-    images: ["/images/hously-2.png"],
+    images: [
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/da6775f8-e984-41bb-9046-942220520e2b.jpg",
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/cd02adb3-9dbc-44f5-a094-bb64e3fb716f.jpg",
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/8178f5cb-387f-4584-849c-e5a7f254363b.jpg",
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/5fa8e3b0-8388-4e89-b1cd-eb6e1a19fb83.jpg",
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/811eac14-0531-403c-bea8-afd4bde2bc0d.jpg",
+    ],
   },
   {
     id: 3,
