@@ -1,30 +1,30 @@
 import { useEffect, useRef, useState } from "react"
-import { Home, Building, Armchair, Trees } from "lucide-react"
+import Icon from "@/components/ui/icon"
 import { HighlightedText } from "./HighlightedText"
 
 const expertiseAreas = [
   {
     title: "Жилые интерьеры",
-    description: "Создаем дома, которые сочетают красоту с комфортом, где каждое пространство служит и форме, и функции.",
-    icon: Home,
+    description: "Создаем уютные дома и квартиры, где каждая деталь продумана под образ жизни и характер владельца.",
+    icon: "Home",
   },
   {
-    title: "Коммерческие объекты",
+    title: "Коммерческие интерьеры",
     description:
-      "Проектируем рабочие пространства, которые вдохновляют на продуктивность и отражают ценности передовых организаций.",
-    icon: Building,
+      "Оформляем офисы, кафе, салоны и магазины — пространства, которые работают на бизнес и притягивают клиентов.",
+    icon: "Briefcase",
   },
   {
-    title: "Дизайн интерьеров",
+    title: "Авторский дизайн",
     description:
-      "Создаем интерьеры, которые гармонируют с пространством и образом жизни, формируя целостный и уютный опыт.",
-    icon: Armchair,
+      "Разрабатываем уникальную концепцию стиля: от настроения и палитры до подбора материалов, мебели и декора.",
+    icon: "Palette",
   },
   {
-    title: "Градостроительство",
+    title: "Ремонт под ключ",
     description:
-      "Формируем сообщества через продуманную интеграцию общественных пространств, зданий и природных элементов.",
-    icon: Trees,
+      "Сопровождаем проект от эскиза до финальной отделки — авторский надзор, координация подрядчиков и контроль качества.",
+    icon: "Sparkles",
   },
 ]
 
@@ -70,7 +70,6 @@ export function Expertise() {
 
         <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
           {expertiseAreas.map((area, index) => {
-            const Icon = area.icon
             return (
               <div
                 key={area.title}
@@ -91,7 +90,7 @@ export function Expertise() {
                     transitionDelay: `${index * 150}ms`,
                   }}
                 >
-                  <Icon className="w-10 h-10 mb-4 text-foreground" strokeWidth={1.25} />
+                  <Icon name={area.icon} size={40} className="mb-4 text-foreground" strokeWidth={1.25} />
                 </div>
                 <h3 className="text-xl font-medium mb-4">{area.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{area.description}</p>
