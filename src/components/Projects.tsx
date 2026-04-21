@@ -4,11 +4,16 @@ import { ArrowUpRight } from "lucide-react"
 const projects = [
   {
     id: 1,
-    title: "Резиденция Светлая",
+    title: "Жилой дом Уссурийск",
     category: "Жилой дом",
-    location: "Москва, Россия",
+    location: "Уссурийск, Россия",
     year: "2024",
-    image: "/images/hously-1.png",
+    images: [
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/3ae498b9-5d09-4f1a-884a-817c20a7e44a.jpg",
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/2ece7531-c138-45af-9b11-53046ee9a172.jpg",
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/46339090-f1f3-4699-a59e-c70bd9370fab.jpg",
+      "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/a3320ab5-73ca-4b4a-a23e-b495f8b47b63.jpg",
+    ],
   },
   {
     id: 2,
@@ -16,7 +21,7 @@ const projects = [
     category: "Коммерческий объект",
     location: "Санкт-Петербург, Россия",
     year: "2023",
-    image: "/images/hously-2.png",
+    images: ["/images/hously-2.png"],
   },
   {
     id: 3,
@@ -24,7 +29,7 @@ const projects = [
     category: "Жилой дом",
     location: "Сочи, Россия",
     year: "2023",
-    image: "/images/hously-3.png",
+    images: ["/images/hously-3.png"],
   },
   {
     id: 4,
@@ -32,14 +37,16 @@ const projects = [
     category: "Гостиничный комплекс",
     location: "Казань, Россия",
     year: "2024",
-    image: "/images/hously-4.png",
+    images: ["/images/hously-4.png"],
   },
 ]
 
 export function Projects() {
   const [hoveredId, setHoveredId] = useState<number | null>(null)
+  const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({})
   const [revealedImages, setRevealedImages] = useState<Set<number>>(new Set())
   const imageRefs = useRef<(HTMLDivElement | null)[]>([])
+  const intervalRef = useRef<Record<number, ReturnType<typeof setInterval>>>({})
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,6 +70,24 @@ export function Projects() {
     return () => observer.disconnect()
   }, [])
 
+  const handleMouseEnter = (project: typeof projects[0]) => {
+    setHoveredId(project.id)
+    if (project.images.length > 1) {
+      intervalRef.current[project.id] = setInterval(() => {
+        setActiveImageIndex((prev) => ({
+          ...prev,
+          [project.id]: ((prev[project.id] ?? 0) + 1) % project.images.length,
+        }))
+      }, 900)
+    }
+  }
+
+  const handleMouseLeave = (project: typeof projects[0]) => {
+    setHoveredId(null)
+    clearInterval(intervalRef.current[project.id])
+    setActiveImageIndex((prev) => ({ ...prev, [project.id]: 0 }))
+  }
+
   return (
     <section id="projects" className="py-32 md:py-29 bg-secondary/50">
       <div className="container mx-auto px-6 md:px-12">
@@ -81,41 +106,56 @@ export function Projects() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {projects.map((project, index) => (
-            <article
-              key={project.id}
-              className="group cursor-pointer"
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
-              <div ref={(el) => (imageRefs.current[index] = el)} className="relative overflow-hidden aspect-[4/3] mb-6">
-                <img
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  className={`w-full h-full object-cover transition-transform duration-700 ${
-                    hoveredId === project.id ? "scale-105" : "scale-100"
-                  }`}
-                />
-                <div
-                  className="absolute inset-0 bg-primary origin-top"
-                  style={{
-                    transform: revealedImages.has(project.id) ? "scaleY(0)" : "scaleY(1)",
-                    transition: "transform 1.5s cubic-bezier(0.76, 0, 0.24, 1)",
-                  }}
-                />
-              </div>
-
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-xl font-medium mb-2 group-hover:underline underline-offset-4">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm">
-                    {project.category} · {project.location}
-                  </p>
+          {projects.map((project, index) => {
+            const currentImageIdx = activeImageIndex[project.id] ?? 0
+            return (
+              <article
+                key={project.id}
+                className="group cursor-pointer"
+                onMouseEnter={() => handleMouseEnter(project)}
+                onMouseLeave={() => handleMouseLeave(project)}
+              >
+                <div ref={(el) => (imageRefs.current[index] = el)} className="relative overflow-hidden aspect-[4/3] mb-6">
+                  <img
+                    src={project.images[currentImageIdx]}
+                    alt={project.title}
+                    className={`w-full h-full object-cover transition-transform duration-700 ${
+                      hoveredId === project.id ? "scale-105" : "scale-100"
+                    }`}
+                  />
+                  {project.images.length > 1 && (
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                      {project.images.map((_, i) => (
+                        <span
+                          key={i}
+                          className={`block h-1 rounded-full transition-all duration-300 ${
+                            i === currentImageIdx ? "w-4 bg-white" : "w-1.5 bg-white/50"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  <div
+                    className="absolute inset-0 bg-primary origin-top"
+                    style={{
+                      transform: revealedImages.has(project.id) ? "scaleY(0)" : "scaleY(1)",
+                      transition: "transform 1.5s cubic-bezier(0.76, 0, 0.24, 1)",
+                    }}
+                  />
                 </div>
-                <span className="text-muted-foreground/60 text-sm">{project.year}</span>
-              </div>
-            </article>
-          ))}
+
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-medium mb-2 group-hover:underline underline-offset-4">{project.title}</h3>
+                    <p className="text-muted-foreground text-sm">
+                      {project.category} · {project.location}
+                    </p>
+                  </div>
+                  <span className="text-muted-foreground/60 text-sm">{project.year}</span>
+                </div>
+              </article>
+            )
+          })}
         </div>
       </div>
     </section>
