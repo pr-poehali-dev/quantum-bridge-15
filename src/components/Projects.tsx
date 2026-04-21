@@ -29,22 +29,7 @@ const projects = [
       "https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/811eac14-0531-403c-bea8-afd4bde2bc0d.jpg",
     ],
   },
-  {
-    id: 3,
-    title: "Дом у моря",
-    category: "Жилой дом",
-    location: "Сочи, Россия",
-    year: "2023",
-    images: ["/images/hously-3.png"],
-  },
-  {
-    id: 4,
-    title: "Северный приют",
-    category: "Гостиничный комплекс",
-    location: "Казань, Россия",
-    year: "2024",
-    images: ["/images/hously-4.png"],
-  },
+
 ]
 
 export function Projects() {
