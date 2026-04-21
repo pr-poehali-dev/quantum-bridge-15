@@ -6,7 +6,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <a href="/" className="inline-block mb-6">
-              <img src="https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/a9a22e2c-30a3-4639-ab3c-10dc44172898.jpg" alt="Студия дизайна интерьеров" className="w-auto h-16" />
+              <img src="https://cdn.poehali.dev/projects/48cabe3b-8dcc-4763-b1e8-63788c6243a7/bucket/c01eb792-2259-4b4d-a396-2f595b009a49.png" alt="Студия дизайна интерьеров" className="w-auto h-16" />
             </a>
             <p className="text-muted-foreground leading-relaxed max-w-sm">
               Создаем пространства для жизни. Архитектурный опыт, где форма, свет и намерение встречаются.
